@@ -165,12 +165,6 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     self->tag_filter = NULL;
     pthread_mutex_init(&self->stopReadingLock, NULL);
 
-    if (((ret = TMR_create(&self->reader, deviceUri)) != TMR_SUCCESS) &&
-    (ret != TMR_SUCCESS_STREAMING))
-    {
-        goto fail;
-    }
-
     if (baudRate > 0)
     {
         if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_BAUDRATE, &baudRate)) != TMR_SUCCESS)
@@ -195,7 +189,7 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
         goto fail;
 
 
-    if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS)
+    if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS_STREAMING)
         goto fail;
 
     if (antenna < 255)
