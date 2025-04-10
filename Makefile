@@ -1,5 +1,5 @@
-APIZIP ?= mercuryapi-BILBO-1.37.3.29-1.zip
-APIVER ?= 1.37.3.29
+APIZIP ?= mercuryapi-BILBO-1.37.2.24.zip
+APIVER ?= 1.37.2.24
 PYTHON ?= $(shell { command -v python3 || command -v python; } 2>/dev/null)
 
 .PHONY: all mercuryapi install
