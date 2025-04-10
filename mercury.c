@@ -165,6 +165,9 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     self->tag_filter = NULL;
     pthread_mutex_init(&self->stopReadingLock, NULL);
 
+    if ((ret = TMR_create(&self->reader, deviceUri)) != TMR_SUCCESS)
+        goto fail;
+
     if (baudRate > 0)
     {
         if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_BAUDRATE, &baudRate)) != TMR_SUCCESS)
@@ -192,11 +195,11 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS)
         goto fail;
 
-//    if (antenna < 255)
-//    {
-//        if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_TAGOP_ANTENNA, &antenna)) != TMR_SUCCESS)
-//            goto fail;
-//    }
+    if (antenna < 255)
+    {
+        if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_TAGOP_ANTENNA, &antenna)) != TMR_SUCCESS)
+            goto fail;
+    }
 
     if (protostr != NULL)
     {
@@ -302,7 +305,7 @@ typedef struct {
     TMR_GEN2_Select_action action;
 } Actions;
 
-enum
+enum TMR_GEN2_Select_no_action
 {
   NO_ACTION = 0xFF
 };
@@ -441,7 +444,7 @@ parse_gen2filter(TMR_TagFilter *tag_filter, PyObject *arg, TMR_GEN2_Select_actio
         {
             if (obj == Py_None)
                 tag_filter->u.gen2Select.action = defaction;
-            else if ((tag_filter->u.gen2Select.action = str2action(object2str(obj))) == (TMR_GEN2_Select_action)NO_ACTION)
+            else if ((tag_filter->u.gen2Select.action = str2action(object2str(obj))) == NO_ACTION)
                 return 0;
         }
         else
