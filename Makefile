@@ -1,5 +1,5 @@
-APIZIP ?= mercuryapi-AHAB-1.35.2.72-1.zip
-APIVER ?= 1.35.2.72
+APIZIP ?= mercuryapi-BILBO-1.37.3.29-1.zip
+APIVER ?= 1.37.3.29
 PYTHON ?= $(shell { command -v python3 || command -v python; } 2>/dev/null)
 
 .PHONY: all mercuryapi install
@@ -25,4 +25,4 @@ mercuryapi-$(APIVER)/.done: $(APIZIP)
 	touch mercuryapi-$(APIVER)/.done
 
 $(APIZIP):
-	curl https://www.jadaktech.com/wp-content/uploads/2022/08/$(APIZIP) -o $(APIZIP)
+	curl -L https://github.com/randomdinosaur/python-mercuryapi/raw/refs/heads/master/$(APIZIP) -o $(APIZIP)
