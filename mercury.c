@@ -192,11 +192,11 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS)
         goto fail;
 
-    if (antenna < 255)
-    {
-        if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_TAGOP_ANTENNA, &antenna)) != TMR_SUCCESS)
-            goto fail;
-    }
+//    if (antenna < 255)
+//    {
+//        if ((ret = TMR_paramSet(&self->reader, TMR_PARAM_TAGOP_ANTENNA, &antenna)) != TMR_SUCCESS)
+//            goto fail;
+//    }
 
     if (protostr != NULL)
     {
