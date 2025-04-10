@@ -192,7 +192,7 @@ Reader_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
         goto fail;
 
 
-    if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS)
+    if ((ret = TMR_connect(&self->reader)) != TMR_SUCCESS_STREAMING)
         goto fail;
 
     if (antenna < 255)
